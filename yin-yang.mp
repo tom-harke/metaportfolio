@@ -1,67 +1,64 @@
+% Tom Harke
+%
+% Todo:
+%  - document the invariant the holds of the snakes
+
 size := 100;
 
+% 5 points are needed to frame (one iteration of) the curve
+%       up
+%        |
+%   lp--cp--rp
+%        |
+%       dp
+pair cp, rp, up, lp, dp;
+cp := (0,0);
+rp := (1,0);
+up := rp rotated  90;
+lp := rp rotated 180;
+dp := rp rotated 270;
+
 path snake, circle;
-circle := (0,-1){left}
-            ..{up}(-1,0)
-            ..{right}(0,1)
-            ..{down}(1,0)
-            ..cycle;
-snake  := (0,-1){left}
-            ..{up}(-1,0)
-            ..{down}(0,0)
-            ..{up}(1,0)
-            ..{left}(0,1);
+path snakes[];
+circle    := dp{left}..{up}lp..{right}up..{down}rp..cycle;
+snakes[0] := dp{left}..{up}lp..{down}cp..{up}rp..{left}up;
 
 beginfig(1);
-draw circle scaled size;
-draw snake  scaled size;
+draw circle    scaled size;
+draw snakes[0] scaled size;
 endfig;
 
-beginfig(2);
-draw circle scaled size withcolor black;
-%draw snake  scaled size;
-path second;
-second := (0,-1){left}..{up}(-1,0)
-   --(snake rotated -90 shifted (-1,0) scaled 0.5)
-   --(snake rotated -90 shifted ( 1,0) scaled 0.5)
-   --(1,0){up}..{left}(0,1)
-   ;
-%draw second  scaled size withcolor red;
+def wiggle(expr p) :=
+   % about:
+   %    Makes a more wiggly path by taking 2 copies of an existing path, connecting them, and a few extra arcs.
+   % pre:
+   %    p is a path for which the invariant holds
+   % post:
+   %    returns a path for which the invariant holds,
+     dp{left}..{up}lp                      % arc in
+   --(p rotated -90 shifted lp scaled 0.5) % copy 1
+   --(p rotated -90 shifted rp scaled 0.5) % copy 2
+   --rp{up}..{left}up                      % arc out
+enddef;
 
-%(
-path third;
-third := (0,-1){left}..{up}(-1,0)
-   --(second rotated -90 shifted (-1,0) scaled 0.5)
-   --(second rotated -90 shifted ( 1,0) scaled 0.5)
-   --(1,0){up}..{left}(0,1)
-   ;
-%draw third  scaled size withcolor green;
-%)
+def close(expr p) :=
+   % pre:
+   %    p is a path for which the invariant holds
+   % post:
+   %    returns a closed path
+   p{right}..rp..cycle
+enddef;
 
-%(
-path fourth;
-fourth := (0,-1){left}..{up}(-1,0)
-   --(third rotated -90 shifted (-1,0) scaled 0.5)
-   --(third rotated -90 shifted ( 1,0) scaled 0.5)
-   --(1,0){up}..{left}(0,1)
-   ;
-%draw fourth  scaled size withcolor green;
-%fill fourth{right}..(1,0)..cycle scaled size withcolor black
-%)
+snakes[1] := wiggle(snakes[0]);
+snakes[2] := wiggle(snakes[1]);
+snakes[3] := wiggle(snakes[2]);
+snakes[4] := wiggle(snakes[3]);
+snakes[5] := wiggle(snakes[4]);
+snakes[6] := wiggle(snakes[5]);
 
-%(
-path fifth;
-fifth := (0,-1){left}..{up}(-1,0)
-   --(fourth rotated -90 shifted (-1,0) scaled 0.5)
-   --(fourth rotated -90 shifted ( 1,0) scaled 0.5)
-   --(1,0){up}..{left}(0,1)
-   ;
-%draw fifth  scaled size withcolor black;
-fill fifth{right}..(1,0)..cycle scaled size withcolor black
-%)
-
-
-
+beginfig(0);
+draw circle           scaled size withcolor black;
+fill close(snakes[6]) scaled size withcolor black;
 endfig;
 
 end;
