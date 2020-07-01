@@ -1,6 +1,93 @@
 \documentclass{article}
 \usepackage{graphicx}
+\usepackage[letterpaper, portrait, margin=0.5in]{geometry}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \begin{document}
-\includegraphics{yin-yang.1}
+
+\section{(TODO)}
+\begin{itemize}
+\item consider using ConTeXt instead of \LaTeX.
+\end{itemize}
+\section{Recursion up the Yin/Yang}
+Behold!
+\begin{center}
+\includegraphics{yin-yang-0}
+\end{center}
+
+An explanation of how to get this figure.
+Label the circle with reference points: u, d, l, r, c.
+To get the figure we'll need several steps, but what
+a single step does is to take a path from $d$ to $u$
+and change it to another path from $d$ to $u$.
+The invariants of the transformation are
+\begin{itemize}
+\item the path starts at $d$
+\item the path ends at $d$
+\item the path is contained in the circle
+\end{itemize}
+Here's the single step, where the red arrow represents the input path:
+\begin{center}
+\begin{tabular}{cc}
+input & output \\
+\includegraphics{yin-yang-11} &
+\includegraphics{yin-yang-12} \\
+\end{tabular}
+\end{center}
+The new path connects 4 parts
+\begin{itemize}
+\item an arc `in' from $d$ to $l$
+\item 2 smaller rotated copies of the input
+\item an arc `out' from $r$ to $u$
+\end{itemize}
+So, one step takes one path to a more `wiggly' path.
+
+Several steps of the construction look like this, where
+the final image is in the background, in green:
+\begin{center}
+\begin{tabular}{cccc}
+\includegraphics{yin-yang-1} &
+\includegraphics{yin-yang-2} &
+\includegraphics{yin-yang-3} &
+\includegraphics{yin-yang-4} \\
+\end{tabular}
+\end{center}
+
+The last step replaces the red arrow with the (traditional) yin/yang curve.
+
+Before drawing a filled curve we need to close it.
+To do so, add a half circle from $u$ through $r$ ending at $d$.
+
+\section{Gray Codes}
+sketch
+\begin{itemize}
+\item show basic snake, with control points
+\item show how wiggle stitches together 2 snakes \& some arcs
+\item mention the invariant
+\end{itemize}
+
+\section{Pixel Graphics}
+\subsection{The Mandelbrot Set}
+\subsection{Bifurcation}
+\section{Sorting}
+\subsection{Merge Sort}
+\subsection{Quick Sort}
+\subsection{Insertion Sort}
+\subsection{Selection Sort}
+\subsection{Heap Sort}
+\section{Trees}
+\subsection{Binary Search Trees}
+\subsection{Heap from Heapsort}
+\section{Tilings}
+\subsection{Penrose Kites \& Darts}
+\section{Knots}
+\section{Proofs Without Words}
+\subsection{Homotopy is a Group}
+\section{Illusions}
+\subsection{Impossible Tribar}
+\subsection{Keptelen Font}
+\section{Libraries}
+\subsection{Complex Numbers}
+% Railroad diagrams
+% Fritz & Brian's diagrams for higher-order functions
+% NP-completeness translations
 \end{document}
