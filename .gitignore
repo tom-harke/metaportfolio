@@ -1,5 +1,7 @@
 ## Generated documents:
 *.pdf
+*.tuc
+*.mpx
 
 ## MetaPost EPS output
 *.[0-9]
