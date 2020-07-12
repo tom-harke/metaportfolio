@@ -23,20 +23,32 @@ endef
 $(foreach n,$(NUMS),$(call image,$n)): %.mp
 	mptopdf $*.mp
 
-metaportfolio.pdf: metaportfolio.tex yin-yang-0.pdf yin-yang-1.pdf gray-0.pdf
+metaportfolio.pdf: metaportfolio.tex
 	pdflatex $<
 
-alternate.pdf: alternate.tex
+metaportfolio.pdf: \
+	yin-yang-0.pdf yin-yang-1.pdf \
+	knots-0.pdf knots-1.pdf \
+	sort-0.pdf sort-1.pdf sort-2.pdf sort-3.pdf sort-4.pdf sort-5.pdf sort-6.pdf \
+	gray-0.pdf
+
+metapost-it-notes.pdf: metapost-it-notes.tex
 	context $<
 
 clean:
 	rm -f *.log
 	rm -f *.aux
-	rm -f *.0
-	rm -f *.1
-	rm -f *.2
+	rm -f *.tuc
+	rm -f *.mpx
+	rm -f *.[0-9]
+	rm -f *.[0-9][0-9]
 
 spotless: clean
 	rm -f *.pdf
 
 .PHONY: clean spotless
+
+# convert gray-0.pdf gray-0.png    
+# convert-im6.q16: not authorized
+# sudo vim /etc/ImageMagick-6/policy.xml
+

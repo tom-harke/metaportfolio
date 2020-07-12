@@ -1,0 +1,89 @@
+\setuphead[section][style=\bfa]
+\setupbodyfontenvironment[default][em=italic]
+
+\starttext
+\startsection[title={Penrose Tiling}]
+
+%(
+\startuseMPgraphic{star}
+for i:=0 upto 4:
+draw (1cm,0) rotated (360*i/5) -- (0,0);
+endfor;
+\stopuseMPgraphic
+
+\placefigure[right]{}{\useMPgraphic{star}}
+%)
+Consider tiling the plane with tiles having some sort of 5-fold symmetry.
+That is, if we focus on some corners we'd see something like ...
+The full sweep around 360\textdegree, so each of the 5 corners is $360\textdegree/5 = 72\textdegree$.
+You can't make triangles all of whose corners are multiples of $72\textdegree$ since the 3 corners need to sum to $180\textdegree$.
+However, if you halve the measure to $36\textdegree$ you could, for example, have a triangle with corners
+   $36\textdegree+72\textdegree+72\textdegree$
+   or
+   $36\textdegree+36\textdegree+108\textdegree$
+   .
+In fact, these are the only 2 possibilities.
+
+\startuseMPgraphic{name}
+pair ooh[], oww[];
+ooh1 = (0,0);
+ooh2 = (0,1cm);
+ooh3 = ooh2 rotatedaround(ooh1,108);
+draw ooh1--ooh2--ooh3--cycle;
+
+oww1 = (1cm,0);
+oww2-oww1 = (0,1cm);
+oww3 = oww2 rotatedaround(oww1,36);
+draw oww1--oww2--oww3--cycle;
+\stopuseMPgraphic
+
+\placefigure[left]{}{\useMPgraphic{name}}
+Let '\cdot' represent $36\textdegree$, '\cdot\cdot' represent $72\textdegree =2\times36\textdegree$, etc.
+Then $180\textdegree$ is 5 \cdot's, and the law that a triangle's corners sum to $180\textdegree$ is equivalent to saying that, if we mark the corners with dots, there are exactly 5 dots among the 3 corners.
+
+We're half way to having the Penrose Kites \& Darts.
+The 113 triangle is half of a Dart, and the 122 is half of a Kite, but we need to figure out how they fit together.
+
+%(
+\startuseMPgraphic{square}
+for i:=0 upto 2:
+   draw ((i,0)--(i,1)--(i,2)) xscaled 1cm yscaled 5mm;
+   draw ((0,i)--(1,i)--(2,i)) xscaled 1cm yscaled 5mm;
+endfor;
+%for i:=0.5 upto 1.5;
+%   draw ((i,0)--(i,1)--(i,2)) xscaled 1cm yscaled 5mm dashed evenly;
+%   draw ((0,i)--(1,i)--(2,i)) xscaled 1cm yscaled 5mm dashed evenly;
+%endfor;
+\stopuseMPgraphic
+
+\startuseMPgraphic{yuck}
+for i:=0,0.7,2:
+   draw ((i,0)--(i,2)) shifted (0,-3) xscaled 1cm yscaled 5mm;
+endfor;
+
+for i:=0,1.5,2:
+   draw ((0,i)--(0.7,i)) shifted (0,-3) xscaled 1cm yscaled 5mm;
+endfor;
+for i:=0,0.7,2:
+   draw ((0.7,i)--(2,i)) shifted (0,-3) xscaled 1cm yscaled 5mm;
+endfor;
+\stopuseMPgraphic
+
+\placefigure[right]{}{\useMPgraphic{square}}
+Back up and consider an easier problem: tiling with rectangles.
+We could start with a space we want to tile and subdivide it into similar parts.
+If the parts are not small enough, repeat.
+We'd like to try something similar with 113 and 122 triangles, but first look at some things we want to avoid while dividing.
+\placefigure[right]{}{\useMPgraphic{yuck}}
+We'd like to avoid subdivisions like in figure~4\footnote{todo}, which has 2 problems:
+\startitemize[n,nowhite]
+\item the smaller tiles have several different shapes
+\item some corners are adjacent to edges
+\stopitemize
+Alternatively, we can phrase 2 principles:
+\startitemize[n,nowhite]
+\item have as few tile shapes as possible
+\item don't allow T-shaped perimeters, where a corner of one tile is in the middle of an edge of another.
+\stopitemize
+\stopsection
+\stoptext
