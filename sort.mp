@@ -61,6 +61,8 @@ enddef;
 numeric snapshot[];
 loadarray(snapshot)(4,8,16,32,48,56,60);
 
+%(
+% Selection Sort generates images in the 0-9 range
 for n:=0,1,2,3,4,5,6:
    loadrandom;
    beginfig(n);
@@ -72,6 +74,23 @@ for n:=0,1,2,3,4,5,6:
    draw (0,0)--(0,64)--(64,64)--(64,0)--cycle;
    endfig;
 endfor;
+%)
+%(
+% Insertion Sort generates images in the 10-19 range
+for n:=0,1,2,3,4,5,6:
+   loadrandom;
+   beginfig(10+n);
+   for i:=0 upto snapshot[n]:
+      for j:=i downto 1:
+         exitif data[j-1] <= data[j];
+         swap(j-1,j);
+      endfor;
+   endfor;
+   render(snapshot[n]);
+   draw (0,0)--(0,64)--(64,64)--(64,0)--cycle;
+   endfig;
+endfor;
+%)
 
 end;
 
